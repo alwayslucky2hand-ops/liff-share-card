@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>準備分享名片...</title>
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding-top: 80px; background-color: #f4f4f4; }
+    .loader { border: 4px solid #e0e0e0; border-top: 4px solid #00B900; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <h3 style="color: #333;">正在為您開啟分享名單...</h3>
+  <p style="color: #666; font-size: 14px;">請稍候，即將載入您的 LINE 好友列表</p>
+
+  <script>
+    // ★ 你的專屬 LIFF ID
+    const myLiffId = "2009335532-Ki7TkW76";
+
+    async function main() {
+      try {
+        await liff.init({ liffId: myLiffId });
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        } else {
+          shareBusinessCard();
+        }
+      } catch (err) {
+        console.error("LIFF 初始化失敗", err);
+        alert("系統發生錯誤，請稍後再試。");
+      }
+    }
+
+    function shareBusinessCard() {
+      if (!liff.isApiAvailable('shareTargetPicker')) {
+        alert("您的 LINE App 版本過舊，不支援分享功能，請更新後再試。");
+        liff.closeWindow();
+        return;
+      }
+
+      const flexMessage = {
+        "type": "flex",
+        "altText": "推薦給您：搬家阿岳的電子名片",
+        "contents": {
+          "type": "carousel",
+          "contents": [
+            {
+              "type": "bubble",
+              "hero": { "type": "image", "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop", "size": "full", "aspectRatio": "20:13", "aspectMode": "cover" },
+              "body": {
+                "type": "box", "layout": "vertical",
+                "contents": [
+                  { "type": "text", "text": "永吉搬家／搬家阿岳", "weight": "bold", "size": "xl" },
+                  { "type": "text", "text": "提供最專業、安心的搬家服務！我們有多年的實戰經驗，不論大小家庭、辦公室搬遷，都能為您輕鬆搞定。", "wrap": true, "color": "#666666", "size": "sm", "margin": "md" }
+                ]
+              },
+              "footer": {
+                "type": "box", "layout": "vertical", "spacing": "sm",
+                "contents": [
+                  { "type": "button", "style": "primary", "color": "#1DB100", "action": { "type": "uri", "label": "🌐 瀏覽官方網站", "uri": "https://www.google.com" } }
+                ]
+              }
+            },
+            {
+              "type": "bubble",
+              "hero": { "type": "image", "url": "https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=800&auto=format&fit=crop", "size": "full", "aspectRatio": "20:13", "aspectMode": "cover" },
+              "body": {
+                "type": "box", "layout": "vertical",
+                "contents": [
+                  { "type": "text", "text": "聯絡資訊", "weight": "bold", "size": "xl" },
+                  { "type": "text", "text": "📞 電話：0912-345-678\n🕒 營業時間：08:00 - 20:00\n有任何複雜的搬家問題，歡迎直接轉接真人由專員為您評估！", "wrap": true, "color": "#666666", "size": "sm", "margin": "md" }
+                ]
+              },
+              "footer": {
+                "type": "box", "layout": "vertical", "spacing": "sm",
+                "contents": [
+                  { "type": "button", "style": "primary", "color": "#FF6B6B", "action": { "type": "message", "label": "🧑‍💻 轉真人客服", "text": "轉真人客服" } },
+                  { "type": "button", "style": "secondary", "action": { "type": "uri", "label": "撥打服務專線", "uri": "tel:0912345678" } }
+                ]
+              }
+            }
+          ]
+        }
+      };
+
+      liff.shareTargetPicker([flexMessage])
+        .then(function (res) {
+          liff.closeWindow();
+        })
+        .catch(function (error) {
+          alert("發生錯誤，請稍後再試。");
+          liff.closeWindow();
+        });
+    }
+
+    main();
+  </script>
+</body>
+</html>
