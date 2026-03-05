@@ -40,13 +40,14 @@
         return;
       }
 
-      // ★ 重點修改：分享出去的卡片不能有「傳送文字(message)」的按鈕，必須全部改成網址(uri)
+      // 包含完整三頁的 Flex Message
       const flexMessage = {
         "type": "flex",
         "altText": "推薦給您：搬家阿岳的電子名片",
         "contents": {
           "type": "carousel",
           "contents": [
+            // --- 第 1 頁：品牌介紹 ---
             {
               "type": "bubble",
               "hero": { "type": "image", "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop", "size": "full", "aspectRatio": "20:13", "aspectMode": "cover" },
@@ -64,6 +65,7 @@
                 ]
               }
             },
+            // --- 第 2 頁：聯絡資訊 ---
             {
               "type": "bubble",
               "hero": { "type": "image", "url": "https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=800&auto=format&fit=crop", "size": "full", "aspectRatio": "20:13", "aspectMode": "cover" },
@@ -77,10 +79,27 @@
               "footer": {
                 "type": "box", "layout": "vertical", "spacing": "sm",
                 "contents": [
-                  // ★ 修改這裡：把原本的 message action 改成 uri action
                   // 💡 請記得把下面的 https://lin.ee/... 換成你們官方帳號真正的加好友連結喔！
                   { "type": "button", "style": "primary", "color": "#FF6B6B", "action": { "type": "uri", "label": "➕ 加 LINE 免費估價", "uri": "https://lin.ee/你的官方LINE連結" } },
                   { "type": "button", "style": "secondary", "action": { "type": "uri", "label": "撥打服務專線", "uri": "tel:0912345678" } }
+                ]
+              }
+            },
+            // --- 第 3 頁：分享卡片 ---
+            {
+              "type": "bubble",
+              "hero": { "type": "image", "url": "https://images.unsplash.com/photo-1578508496313-2d2d8805f15a?q=80&w=800&auto=format&fit=crop", "size": "full", "aspectRatio": "20:13", "aspectMode": "cover" },
+              "body": {
+                "type": "box", "layout": "vertical",
+                "contents": [
+                  { "type": "text", "text": "好康道相報 🎁", "weight": "bold", "size": "xl" },
+                  { "type": "text", "text": "覺得我們的服務不錯嗎？\n歡迎點擊下方按鈕，將「搬家阿岳」推薦給有需要搬家的親朋好友！", "wrap": true, "color": "#666666", "size": "sm", "margin": "md" }
+                ]
+              },
+              "footer": {
+                "type": "box", "layout": "vertical", "spacing": "sm",
+                "contents": [
+                  { "type": "button", "style": "primary", "color": "#00B900", "action": { "type": "uri", "label": "📢 分享給 LINE 好友", "uri": "https://liff.line.me/2009335532-Ki7TkW76" } }
                 ]
               }
             }
