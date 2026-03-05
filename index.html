@@ -17,7 +17,6 @@
   <p style="color: #666; font-size: 14px;">請稍候，即將載入您的 LINE 好友列表</p>
 
   <script>
-    // ★ 你的專屬 LIFF ID
     const myLiffId = "2009335532-Ki7TkW76";
 
     async function main() {
@@ -41,6 +40,7 @@
         return;
       }
 
+      // ★ 重點修改：分享出去的卡片不能有「傳送文字(message)」的按鈕，必須全部改成網址(uri)
       const flexMessage = {
         "type": "flex",
         "altText": "推薦給您：搬家阿岳的電子名片",
@@ -71,13 +71,15 @@
                 "type": "box", "layout": "vertical",
                 "contents": [
                   { "type": "text", "text": "聯絡資訊", "weight": "bold", "size": "xl" },
-                  { "type": "text", "text": "📞 電話：0912-345-678\n🕒 營業時間：08:00 - 20:00\n有任何複雜的搬家問題，歡迎直接轉接真人由專員為您評估！", "wrap": true, "color": "#666666", "size": "sm", "margin": "md" }
+                  { "type": "text", "text": "📞 電話：0912-345-678\n🕒 營業時間：08:00 - 20:00\n有任何複雜的搬家問題，歡迎免費加 LINE 諮詢評估！", "wrap": true, "color": "#666666", "size": "sm", "margin": "md" }
                 ]
               },
               "footer": {
                 "type": "box", "layout": "vertical", "spacing": "sm",
                 "contents": [
-                  { "type": "button", "style": "primary", "color": "#FF6B6B", "action": { "type": "message", "label": "🧑‍💻 轉真人客服", "text": "轉真人客服" } },
+                  // ★ 修改這裡：把原本的 message action 改成 uri action
+                  // 💡 請記得把下面的 https://lin.ee/... 換成你們官方帳號真正的加好友連結喔！
+                  { "type": "button", "style": "primary", "color": "#FF6B6B", "action": { "type": "uri", "label": "➕ 加 LINE 免費估價", "uri": "https://lin.ee/你的官方LINE連結" } },
                   { "type": "button", "style": "secondary", "action": { "type": "uri", "label": "撥打服務專線", "uri": "tel:0912345678" } }
                 ]
               }
